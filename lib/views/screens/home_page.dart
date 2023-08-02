@@ -75,6 +75,7 @@ class HomePage extends StatelessWidget {
                       itemCount: provider.data.length,
                       itemBuilder: (context, index) {
                         return Card(
+                          color: Colors.primaries[index % 18].shade400,
                           // child: ListTile(
                           //   // leading: Text("${provider.data[index]['category']}"),
                           //   title: Text("${provider.data[index]['quote']}"),
@@ -86,8 +87,23 @@ class HomePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${provider.data[index]['quote']}"),
-                                Text("- ${provider.data[index]['author']}"),
+                                Text(
+                                  "${provider.data[index]['quote']}",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "- ${provider.data[index]['author']}",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
