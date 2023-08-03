@@ -1,5 +1,6 @@
 import 'package:exam_1/controllers/helpers/quotes_helper.dart';
 import 'package:exam_1/controllers/quotes_controller.dart';
+import 'package:exam_1/utils/my_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -74,37 +75,50 @@ class HomePage extends StatelessWidget {
                   child: ListView.builder(
                       itemCount: provider.data.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          color: Colors.primaries[index % 18].shade400,
-                          // child: ListTile(
-                          //   // leading: Text("${provider.data[index]['category']}"),
-                          //   title: Text("${provider.data[index]['quote']}"),
-                          //   trailing:
-                          //       Text("- ${provider.data[index]['author']}"),
-                          // ),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${provider.data[index]['quote']}",
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              MyPageRoute.detailPage,
+                              arguments: index,
+                            );
+                          },
+                          child: Card(
+                            color: Colors.primaries[index % 18].shade400,
+                            // child: ListTile(
+                            //   // leading: Text("${provider.data[index]['category']}"),
+                            //   title: Text("${provider.data[index]['quote']}"),
+                            //   trailing:
+                            //       Text("- ${provider.data[index]['author']}"),
+                            // ),
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${provider.data[index]['quote']}",
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "- ${provider.data[index]['author']}",
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
+                                  const SizedBox(
+                                    height: 15,
                                   ),
-                                ),
-                              ],
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "- ${provider.data[index]['author']}",
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
