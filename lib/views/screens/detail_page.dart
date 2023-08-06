@@ -25,8 +25,9 @@ class DetailPage extends StatelessWidget {
         backgroundColor: Colors.blue,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Consumer<QuotesController>(builder: (context, provider, child) {
+          provider.ind = index;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,7 +39,7 @@ class DetailPage extends StatelessWidget {
                   color: Colors.white,
                   image: DecorationImage(
                     image: NetworkImage(
-                      provider.background[provider.bdImage].toString(),
+                      provider.background[provider.bdImage],
                     ),
                     fit: BoxFit.fill,
                   ),
@@ -51,32 +52,67 @@ class DetailPage extends StatelessWidget {
                   ],
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "${provider.data[index]['quote']}",
-                        style: TextStyle(
-                          color: provider.textColor,
-                          fontWeight: FontWeight.values[provider.fontWeight],
-                          fontSize: 22,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "- ${provider.data[index]['author']}",
-                            style: TextStyle(
-                              color: provider.textColor,
-                              fontWeight:
-                                  FontWeight.values[provider.fontWeight],
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                provider.back(index: index);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: provider.textColor,
+                              ),
                             ),
+                            Text(
+                              "Quote",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                                color: provider.textColor,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                provider.forward(index: index);
+                              },
+                              icon: Icon(
+                                Icons.arrow_forward_ios,
+                                color: provider.textColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${provider.data[provider.ind]['quote']}",
+                          style: TextStyle(
+                            color: provider.textColor,
+                            fontWeight: FontWeight.values[provider.fontWeight],
+                            fontSize: 22,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "- ${provider.data[index]['author']}",
+                              style: TextStyle(
+                                color: provider.textColor,
+                                fontWeight:
+                                    FontWeight.values[provider.fontWeight],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -125,9 +161,6 @@ class DetailPage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Slider(
                   min: 0,
                   max: 8,
@@ -138,33 +171,6 @@ class DetailPage extends StatelessWidget {
                       val: val.toInt(),
                     );
                   }),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Change Text Background :- ",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: provider.background.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      provider.changeBackground(index: index);
-                    },
-                    child: Image.network(
-                      provider.background[index],
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
             ],
           );
         }),

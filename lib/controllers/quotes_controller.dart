@@ -21,6 +21,7 @@ class QuotesController extends ChangeNotifier {
   ];
 
   int bdImage = 0;
+  int ind = 0;
 
   List colors = [
     Colors.white,
@@ -36,7 +37,39 @@ class QuotesController extends ChangeNotifier {
   }
 
   changeBackground({required int index}) {
-    bdImage = background[index];
+    bdImage = index;
+    notifyListeners();
+  }
+
+  changeQuote({required int index}) {
+    ind = index;
+    notifyListeners();
+  }
+
+  back({required int index}) {
+    if (bdImage != 0) {
+      bdImage--;
+    } else {
+      bdImage = 0;
+    }
+    notifyListeners();
+  }
+
+  forward({required int index}) {
+    if (bdImage < background.length - 1) {
+      bdImage++;
+    } else {
+      bdImage = 0;
+    }
+    notifyListeners();
+  }
+
+  backQuote({required int index}) {
+    if (ind != 0) {
+      ind--;
+    } else {
+      ind = 0;
+    }
     notifyListeners();
   }
 
