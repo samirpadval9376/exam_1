@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:exam_1/modals/quotes_modal.dart';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class QuotesHelper {
@@ -14,7 +13,7 @@ class QuotesHelper {
 
     http.Response response = await http.get(
       Uri.parse(quotes),
-      headers: {'X-Api-Key': 'fLulbS/eIS1ACumkrbObjA==IGiJ3yTRnpnvAjIW'},
+      headers: {'X-Api-Key': 'Mi5FpzN1viPqAh6DM2nCEw==UdKPt0vaCqARFEbk'},
     );
 
     if (response.statusCode == 200) {
@@ -22,13 +21,13 @@ class QuotesHelper {
 
       // List allData = data['quotes'];
 
-      print("=============================");
-      print("${response.body}");
-      print("=============================");
+      log("=============================");
+      log(response.body);
+      log("=============================");
 
       return data;
     } else {
-      print(
+      log(
         "Error:- ${response.statusCode}",
       );
     }
