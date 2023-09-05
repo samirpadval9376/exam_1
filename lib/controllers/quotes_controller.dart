@@ -1,7 +1,8 @@
 import 'package:exam_1/controllers/helpers/quotes_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class QuotesController extends ChangeNotifier {
+class QuotesController extends GetxController {
   List data = [];
   List<String> category = [
     "happiness",
@@ -33,17 +34,17 @@ class QuotesController extends ChangeNotifier {
 
   changeColor({required int index}) {
     textColor = colors[index];
-    notifyListeners();
+    update();
   }
 
   changeBackground({required int index}) {
     bdImage = index;
-    notifyListeners();
+    update();
   }
 
   changeQuote({required int index}) {
     ind = index;
-    notifyListeners();
+    update();
   }
 
   back({required int index}) {
@@ -52,7 +53,7 @@ class QuotesController extends ChangeNotifier {
     } else {
       bdImage = 0;
     }
-    notifyListeners();
+    update();
   }
 
   forward({required int index}) {
@@ -61,7 +62,7 @@ class QuotesController extends ChangeNotifier {
     } else {
       bdImage = 0;
     }
-    notifyListeners();
+    update();
   }
 
   backQuote({required int index}) {
@@ -70,7 +71,7 @@ class QuotesController extends ChangeNotifier {
     } else {
       ind = 0;
     }
-    notifyListeners();
+    update();
   }
 
   int fontWeight = 3;
@@ -81,12 +82,12 @@ class QuotesController extends ChangeNotifier {
 
   font({required int val}) {
     fontWeight = val;
-    notifyListeners();
   }
 
   search({String val = "happiness"}) async {
     data = await QuotesHelper.quotesHelper.quotes(category: val) ?? [];
-    notifyListeners();
+    update();
+
     return 0;
   }
 }

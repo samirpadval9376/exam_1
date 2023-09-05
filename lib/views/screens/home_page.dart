@@ -1,10 +1,12 @@
 import 'package:exam_1/controllers/quotes_controller.dart';
 import 'package:exam_1/utils/my_page_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  QuotesController quotesController = Get.put(QuotesController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,107 +27,98 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
-          child:
-              Consumer<QuotesController>(builder: (context, provider, child) {
-            return Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search",
-                    hintStyle: TextStyle(
-                      color: Colors.grey.shade400,
-                    ),
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey.shade400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade400,
                   ),
-                  onSubmitted: (val) {
-                    provider.search(val: val);
-                  },
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey.shade400,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: provider.category.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                provider.category = await provider.search(
-                                    val: provider.category[index]);
-                              },
-                              child: Text(provider.category[index]),
-                            ),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: ListView.builder(
-                      itemCount: provider.data.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              MyPageRoute.detailPage,
-                              arguments: index,
-                            );
-                          },
-                          child: Card(
-                            color: Colors.primaries[index % 18].shade400,
-                            // child: ListTile(
-                            //   // leading: Text("${provider.data[index]['category']}"),
-                            //   title: Text("${provider.data[index]['quote']}"),
-                            //   trailing:
-                            //       Text("- ${provider.data[index]['author']}"),
-                            // ),
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${provider.data[index]['quote']}",
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                onSubmitted: (val) {
+                  quotesController.search(val: val);
+                },
+              ),
+              Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: quotesController.category.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              quotesController.category =
+                                  await quotesController.search(
+                                      val: quotesController.category[index]);
+                            },
+                            child: Text(quotesController.category[index]),
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              Expanded(
+                flex: 7,
+                child: ListView.builder(
+                    itemCount: quotesController.data.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            MyPageRoute.detailPage,
+                            arguments: index,
+                          );
+                        },
+                        child: Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${quotesController.data[index]['quote']}",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "- ${provider.data[index]['author']}",
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "- ${quotesController.data[index]['author']}",
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      }),
-                ),
-              ],
-            );
-          }),
+                        ),
+                      );
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );

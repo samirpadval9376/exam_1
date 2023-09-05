@@ -28,7 +28,7 @@ class splesh extends StatelessWidget {
               child: const CircularProgressIndicator(),
             ),
           ),
-          nextScreen: const HomePage(),
+          nextScreen: HomePage(),
         ),
       ),
     );

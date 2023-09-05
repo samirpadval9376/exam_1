@@ -1,21 +1,12 @@
-import 'package:exam_1/controllers/quotes_controller.dart';
 import 'package:exam_1/utils/my_page_route.dart';
 import 'package:exam_1/views/screens/detail_page.dart';
 import 'package:exam_1/views/screens/home_page.dart';
 import 'package:exam_1/views/screens/splesh_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => QuotesController(),
-        ),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -30,9 +21,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        MyPageRoute.home: (context) => const HomePage(),
+        MyPageRoute.home: (context) => HomePage(),
         MyPageRoute.splesh: (context) => const splesh(),
-        MyPageRoute.detailPage: (context) => const DetailPage(),
+        MyPageRoute.detailPage: (context) => DetailPage(),
       },
     );
   }
